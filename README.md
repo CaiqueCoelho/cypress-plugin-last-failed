@@ -226,6 +226,10 @@ jobs:
 
 For more information on Typescript support involved with `@bahmutov/cy-grep` package, refer to it's [README](https://github.com/bahmutov/cy-grep?tab=readme-ov-file#typescript-support).
 
+## Troubleshooting
+1. If you are having problems to generate the test-results folder with the last-run.json file make sure you are adding the collectFailingTests(on, config) call to the end of the plugin setup, after all other plugins have been initialized. This ensures the plugin's after:run handler is registered last and executes.
+
+
 ## Contributions
 
 Feel free to open a pull request or drop any feature request or bug in the [issues](https://github.com/dennisbergevin/cypress-plugin-last-failed/issues).
