@@ -23,8 +23,21 @@ Try running tests again with cypress run`;
     // Retrieve the failedTests from the file
     const failedTests = await fs.promises.readFile(failedTestFilePath, 'utf8');
 
+    // Check if the file is empty or contains only whitespace
+    if (!failedTests || failedTests.trim().length === 0) {
+      console.log(noFailedTestsMessage);
+      return;
+    }
+
+    // Parse and check if the parsed result is an empty array
+    const parsedTests = JSON.parse(failedTests);
+    if (!Array.isArray(parsedTests) || parsedTests.length === 0) {
+      console.log(noFailedTestsMessage);
+      return;
+    }
+
     // Retrieve the parent suite and tests in the results from test-results/last-run
-    const parentAndTest = JSON.parse(failedTests).map(({ parent, test }) => ({
+    const parentAndTest = parsedTests.map(({ parent, test }) => ({
       parent,
       test,
     }));
